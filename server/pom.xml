@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>eii</groupId>
-            <artifactId>sick-dungeon-client</artifactId>
+            <artifactId>sick-dungeon-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -20,6 +20,11 @@
             <artifactId>javax.websocket-api</artifactId>
             <version>1.1</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
 

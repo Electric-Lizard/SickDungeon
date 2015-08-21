@@ -8,4 +8,5 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/lol")
 public class EndPoint {
 
+
 }

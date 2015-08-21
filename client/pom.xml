@@ -16,6 +16,17 @@
             <version>2.7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>eii</groupId>
+            <artifactId>sick-dungeon-shared</artifactId>
+            <version>0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.realityforge.gwt.websockets</groupId>
+            <artifactId>gwt-websockets</artifactId>
+            <version>1.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -37,9 +48,10 @@
                 <configuration>
                     <failOnError>true</failOnError>
                     <sourceLevel>1.7</sourceLevel>
+                    <runTarget>./</runTarget>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
+    <packaging>pom</packaging>
 </project>
