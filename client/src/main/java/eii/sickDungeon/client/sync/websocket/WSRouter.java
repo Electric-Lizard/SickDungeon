@@ -2,6 +2,9 @@ package eii.sickDungeon.client.sync.websocket;
 
 import eii.sickDungeon.client.event.ActionHandler;
 import eii.sickDungeon.client.sync.Router;
+import eii.sickDungeon.shared.Room;
+
+import java.util.List;
 
 /**
  * Created by username on 8/20/15.
@@ -17,5 +20,10 @@ public class WSRouter implements Router {
         } catch (WebSocketNotSupportedException e) {
             failHandler.doAction();
         }
+    }
+
+    @Override
+    public List<Room> getRoomList() {
+        return null;
     }
 }

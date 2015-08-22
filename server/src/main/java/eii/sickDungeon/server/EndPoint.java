@@ -1,5 +1,7 @@
 package eii.sickDungeon.server;
 
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 /**
@@ -8,5 +10,8 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/lol")
 public class EndPoint {
 
-
+    @OnOpen
+    public void onOpen(Session session) {
+        int af = 3;
+    }
 }

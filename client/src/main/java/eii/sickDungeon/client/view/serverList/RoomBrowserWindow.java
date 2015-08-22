@@ -21,6 +21,7 @@ public class RoomBrowserWindow extends DialogBox {
         super(false, true);
         setWidget(roomListWidget);
         delegateEvents();
+        setStyleName("roomBrowser");
         //TODO: render window (without attaching)
     }
 

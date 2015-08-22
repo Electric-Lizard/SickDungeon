@@ -25,6 +25,7 @@ public class EndPoint implements WebSocketListener {
             throw new WebSocketNotSupportedException();
         }
 
+        webSocket.setListener(this);
         webSocket.connect(Config.getProperties().webSocketUrl);
     }
 
@@ -56,7 +57,6 @@ public class EndPoint implements WebSocketListener {
      */
     @Override
     public void onOpen(WebSocket webSocket) {
-        this.webSocket = webSocket;
         triggerOpenHandlers();
     }
 
