@@ -1,7 +1,8 @@
 package eii.sickDungeon.client.sync;
 
 import eii.sickDungeon.client.event.ActionHandler;
-import eii.sickDungeon.shared.Room;
+import eii.sickDungeon.shared.model.Room;
+import eii.sickDungeon.shared.model.RoomCollection;
 
 import java.util.List;
 
@@ -11,5 +12,8 @@ import java.util.List;
 public interface Router {
     void connect(ActionHandler openHandler, ActionHandler failHandler);
 
-    List<Room> getRoomList();
+    void getRoomList();
+
+    void addRoomListHandler(DataFetchHandler<RoomCollection> roomListHandler);
+    void removeRoomListHandler(DataFetchHandler<RoomCollection> roomListHandler);
 }

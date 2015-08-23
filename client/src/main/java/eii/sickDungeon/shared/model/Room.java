@@ -1,4 +1,4 @@
-package eii.sickDungeon.shared;
+package eii.sickDungeon.shared.model;
 
 import java.util.List;
 

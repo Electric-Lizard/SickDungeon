@@ -1,5 +1,8 @@
 package eii.sickDungeon.server;
 
+import com.google.web.bindery.autobean.shared.AutoBeanFactory;
+
+import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
@@ -9,9 +12,19 @@ import javax.websocket.server.ServerEndpoint;
  */
 @ServerEndpoint("/lol")
 public class EndPoint {
+    Router router = Router.getInstance();
 
     @OnOpen
     public void onOpen(Session session) {
         int af = 3;
+    }
+
+    @OnMessage
+    public void onMessage(Session session, String message) {
+        router.handlerMessage(session, message);
+    }
+
+    interface TmpFactory extends AutoBeanFactory {
+
     }
 }

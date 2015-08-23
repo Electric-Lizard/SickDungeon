@@ -1,4 +1,4 @@
-package eii.sickDungeon.client.sync.websocket;
+package eii.sickDungeon.client;
 
 /**
  * Created by username on 8/22/15.

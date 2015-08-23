@@ -16,11 +16,6 @@
             <version>2.7.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>eii</groupId>
-            <artifactId>sick-dungeon-shared</artifactId>
-            <version>0.1</version>
-        </dependency>
 
         <dependency>
             <groupId>org.realityforge.gwt.websockets</groupId>
@@ -53,5 +48,4 @@
             </plugin>
         </plugins>
     </build>
-    <packaging>pom</packaging>
 </project>

@@ -5,6 +5,8 @@
     <!-- Inherit the core Web Toolkit stuff.                  -->
     <inherits name='com.google.gwt.user.User'/>
     <inherits name="org.realityforge.gwt.websockets.WebSockets"/>
+    <inherits name="com.google.web.bindery.autobean.AutoBean"/>
+    <inherits name="com.google.gwt.json.JSON"/>
 
     <!-- Specify the app entry point class.                   -->
     <entry-point class='eii.sickDungeon.client.SickDungeon'/>

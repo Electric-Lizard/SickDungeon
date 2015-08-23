@@ -4,12 +4,10 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import eii.sickDungeon.client.event.ActionHandler;
+import eii.sickDungeon.client.sync.DataFetchHandler;
 import eii.sickDungeon.client.sync.Router;
-import eii.sickDungeon.client.sync.websocket.WSRouter;
 import eii.sickDungeon.client.view.serverList.RoomBrowserWindow;
-import eii.sickDungeon.shared.Room;
-
-import java.util.List;
+import eii.sickDungeon.shared.model.RoomCollection;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
@@ -49,8 +47,15 @@ public class SickDungeon implements EntryPoint {
 
     protected void buildUI() {
         rootPanel.add(roomBrowser);
-        roomBrowser.setText("Opened");
         roomBrowser.show();
-        List<Room> roomList = router.getRoomList();
+        roomBrowser.enableProcessing();
+        router.addRoomListHandler(new DataFetchHandler<RoomCollection>() {
+            @Override
+            public void handleData(RoomCollection data) {
+                roomBrowser.resetRoomList(data);
+                roomBrowser.disableProcessing();
+            }
+        });
+        router.getRoomList();
     }
 }
