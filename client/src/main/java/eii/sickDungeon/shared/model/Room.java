@@ -7,5 +7,7 @@ import java.util.List;
  */
 public interface Room {
     int getId();
+    void setId(int id);
     List<User> getPlayers();
+    void setPlayers(List<User> players);
 }

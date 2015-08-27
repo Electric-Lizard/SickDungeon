@@ -14,8 +14,11 @@ public class RoomService {
     private RoomCollection roomCollection;
 
     public RoomService() {
-        /*roomCollection = RequestParser.getModelFactory().makeRoomCollection();
-        roomCollection.setRoomList(new ArrayList<>());*/
+        roomCollection = RequestParser.getModelFactory().makeRoomCollection();
+        roomCollection.setRoomList(new ArrayList<>());
+        Room tmpRoom = RequestParser.getModelFactory().makeRoom();
+        tmpRoom.setId(0);
+        roomCollection.getRoomList().add(tmpRoom);
     }
 
     public RoomCollection getRoomCollection() {

@@ -1,7 +1,5 @@
 package eii.sickDungeon.server;
 
-import com.google.web.bindery.autobean.shared.AutoBeanFactory;
-
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -22,9 +20,5 @@ public class EndPoint {
     @OnMessage
     public void onMessage(Session session, String message) {
         router.handlerMessage(session, message);
-    }
-
-    interface TmpFactory extends AutoBeanFactory {
-
     }
 }

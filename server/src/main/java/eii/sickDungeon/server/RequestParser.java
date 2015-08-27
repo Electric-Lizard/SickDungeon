@@ -1,5 +1,6 @@
 package eii.sickDungeon.server;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.web.bindery.autobean.vm.AutoBeanFactorySource;
@@ -46,6 +47,7 @@ public class RequestParser {
     }
 
     public <T> T getRequestData(Class<T> requestDataClass) {
-        return requestDataSerializer.deserialize(requestJson.get("data").toString(), requestDataClass);
+        JsonElement jsonData = requestJson.get("data");
+        return jsonData.isJsonNull() ? null : requestDataSerializer.deserialize(jsonData.toString(), requestDataClass);
     }
 }
