@@ -1,6 +1,6 @@
 package eii.sickDungeon.server;
 
-import eii.sickDungeon.shared.RequestName;
+import eii.sickDungeon.gwt.shared.RequestName;
 
 import javax.websocket.Session;
 

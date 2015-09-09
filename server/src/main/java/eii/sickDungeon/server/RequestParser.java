@@ -4,10 +4,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.web.bindery.autobean.vm.AutoBeanFactorySource;
-import eii.sickDungeon.shared.AutoBeanModelFactory;
-import eii.sickDungeon.shared.RequestName;
-import eii.sickDungeon.shared.model.ModelFactory;
-import eii.sickDungeon.shared.model.RequestDataSerializer;
+import eii.sickDungeon.gwt.shared.AutoBeanModelFactory;
+import eii.sickDungeon.gwt.shared.RequestName;
+import eii.sickDungeon.gwt.shared.model.ModelFactory;
+import eii.sickDungeon.gwt.shared.model.RequestDataSerializer;
 
 /**
  * Created by username on 8/23/15.
