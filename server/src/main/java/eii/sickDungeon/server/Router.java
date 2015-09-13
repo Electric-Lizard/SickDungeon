@@ -1,6 +1,6 @@
 package eii.sickDungeon.server;
 
-import eii.sickDungeon.app.SickDungeon;
+import eii.sickDungeon.app.Application;
 import eii.sickDungeon.gwt.shared.RequestName;
 
 import javax.websocket.Session;
@@ -21,7 +21,7 @@ public class Router {
 
     private Map<RequestName, List<RequestHandler>> requestHandlers = new HashMap<>();
 
-    private SickDungeon app = new SickDungeon();
+    private Application app = new Application();
 
     private Router() {
         addRequestHandler(RequestName.getRoomCollection, new GetRoomListHandler());
