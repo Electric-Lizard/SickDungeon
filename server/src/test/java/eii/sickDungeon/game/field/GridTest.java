@@ -24,23 +24,29 @@ public class GridTest {
 
     @Test
     public void testWallGeneration() {
+        System.out.print(drawRandomDungeon(new Dimension(100, 30)));
+    }
+
+    public String drawRandomDungeon(Dimension size) {
+        StringBuilder output = new StringBuilder();
         try {
             Random random = new Random();
-            Grid gameGrid = new Grid(new Dimension(100, 30));
-            for (int i = 0; i < 50; i++) {
+            Grid gameGrid = new Grid(size);
+            for (int i = 0; i < 100; i++) {
                 gameGrid.generateWall();
             }
             Tile[][] tileSet = gameGrid.getTileSet();
-            System.out.print("\n");
+            output.append("\n");
             for (Tile[] tileRow : tileSet) {
                 for (Tile tile : tileRow) {
                     String character = layout.get(tile.getPassability()).toString();
-                    System.out.print(character);
+                    output.append(character);
                 }
-                System.out.print("\n");
+                output.append("\n");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             throw e;
         }
+        return output.toString();
     }
 }

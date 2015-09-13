@@ -31,6 +31,16 @@ public class Grid {
     public void setTile(Coordinates tileCoordinates, Tile tile) {
         tileSet[tileCoordinates.getVertical()][tileCoordinates.getHorizontal()] = tile;
     }
+
+    public boolean isTileExists(Coordinates tileCoordinates) {
+        try {
+            getTile(tileCoordinates);
+            return true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+    }
+
     protected void generateWalls() {
         for (int row = 0, tileSetLength = tileSet.length; row < tileSetLength; row++) {
             Tile[] tileRow = tileSet[row];
@@ -105,13 +115,14 @@ public class Grid {
         List<Direction> directions = new ArrayList<>(Arrays.asList(Direction.Up, Direction.Right, Direction.Down, Direction.Left));
 
         Tile nextWall;
+        Coordinates nextWallCoordinates;
         Direction direction;
         do {
             int directionIndex = random.nextInt(directions.size());
             direction = directions.get(directionIndex);
             directions.remove(directionIndex);
             Coordinates directionCoordinates = direction.getCoordinates();
-            Coordinates nextWallCoordinates = beginningWallCoordinates.shift(directionCoordinates);
+            nextWallCoordinates = beginningWallCoordinates.shift(directionCoordinates);
             try {
                 nextWall = getTile(nextWallCoordinates);
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -121,8 +132,22 @@ public class Grid {
                 direction = null;
                 break;
             }
-        } while (nextWall == null || nextWall.getPassability() != Tile.Passability.Passable);
+        } while (nextWall == null || nextWall.getPassability() != Tile.Passability.Passable ||
+                countNearWalls(nextWallCoordinates, directions) != 1);
         return direction;
+    }
+
+    public int countNearWalls(Coordinates tileCoordinates, List<Direction> directions) {
+        int nearWallsCount = 0;
+        for (Direction direction : directions) {
+            Coordinates nearTileCoordinates = tileCoordinates.shift(direction.getCoordinates());
+
+            if (isTileExists(nearTileCoordinates)) {
+                Tile nearTile = getTile(nearTileCoordinates);
+                if (nearTile.getPassability() != Tile.Passability.Passable) nearWallsCount++;
+            }
+        }
+        return nearWallsCount;
     }
 
     protected boolean isBorder(Coordinates coordinates) {
