@@ -1,51 +1,60 @@
 package eii.sickDungeon.game.field;
 
-import eii.sickDungeon.game.SickDungeon;
-import eii.sickDungeon.game.field.Grid;
-import eii.sickDungeon.game.field.Tile;
+import junit.framework.Assert;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by username on 9/12/15.
  */
 public class GridTest {
-    private static Map<Tile.Passability, Character> layout;
+    private static Map<LinesDungeonGenerator.TileType, Character> layout;
+
     static {
         layout = new HashMap<>();
-        layout.put(Tile.Passability.NoPassable, '#');
-        layout.put(Tile.Passability.Passable, '.');
-        layout.put(Tile.Passability.Optional, '/');
+        layout.put(LinesDungeonGenerator.TileType.WALL, '#');
+        layout.put(LinesDungeonGenerator.TileType.FLOOR, '.');
+        layout.put(LinesDungeonGenerator.TileType.DOOR, '/');
     }
 
     @Test
     public void testWallGeneration() {
-        System.out.print(drawRandomDungeon(new Dimension(100, 30)));
+        System.out.print(drawRandomDungeon(50, 10));
     }
 
-    public String drawRandomDungeon(Dimension size) {
-        StringBuilder output = new StringBuilder();
+    @Test
+    public void testNearlyWallsFailing() {
+        LinesDungeonGenerator dungeonGenerator = new LinesDungeonGenerator();
+        dungeonGenerator.generateBaseBox(100, 30);
+
+        Assert.assertFalse(dungeonGenerator.checkWallPossibility(new Coordinates(1, 0), Direction.Down) != null);
+    }
+
+    public String drawRandomDungeon(int width, int height) {
         try {
-            Random random = new Random();
-            Grid gameGrid = new Grid(size);
-            for (int i = 0; i < 100; i++) {
-                gameGrid.generateWall();
-            }
-            Tile[][] tileSet = gameGrid.getTileSet();
-            output.append("\n");
-            for (Tile[] tileRow : tileSet) {
-                for (Tile tile : tileRow) {
-                    String character = layout.get(tile.getPassability()).toString();
-                    output.append(character);
-                }
-                output.append("\n");
-            }
+            LinesDungeonGenerator dungeonGenerator = new LinesDungeonGenerator();
+            dungeonGenerator.composeDungeon(width, height, 50);
+            return drawDungeon(dungeonGenerator);
+
         } catch (ArrayIndexOutOfBoundsException e) {
             throw e;
+        }
+    }
+
+    public static String drawDungeon(LinesDungeonGenerator dungeonGenerator) {
+        StringBuilder output = new StringBuilder();
+
+        output.append("\n");
+
+        for (int row = 0; row < dungeonGenerator.getHeight(); row++) {
+            for (int column = 0; column < dungeonGenerator.getWidth(); column++) {
+                LinesDungeonGenerator.TileType tile = dungeonGenerator.getTile(new Coordinates(column, row));
+                String character = layout.get(tile).toString();
+                output.append(character);
+            }
+            output.append("\n");
         }
         return output.toString();
     }
