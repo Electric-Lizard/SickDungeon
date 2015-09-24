@@ -5,18 +5,12 @@ package eii.sickDungeon.game.field;
  */
 public class TileFactory {
     public static Tile makeWall() {
-        Tile wall = new Tile();
-        wall.setPassability(Tile.Passability.NoPassable);
-        return wall;
+        return Tile.WALL;
     }
     public static Tile makeFloor() {
-        Tile wall = new Tile();
-        wall.setPassability(Tile.Passability.Passable);
-        return wall;
+        return Tile.FLOOR;
     }
     public static Tile makeDoor() {
-        Tile wall = new Tile();
-        wall.setPassability(Tile.Passability.Optional);
-        return wall;
+        return Tile.DOOR;
     }
 }

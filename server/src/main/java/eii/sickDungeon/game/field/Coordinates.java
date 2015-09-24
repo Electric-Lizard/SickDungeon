@@ -1,5 +1,7 @@
 package eii.sickDungeon.game.field;
 
+import java.util.HashMap;
+
 /**
  * Created by username on 9/13/15.
  */
@@ -29,5 +31,11 @@ public class Coordinates implements Cloneable {
 
     public boolean equals(Coordinates coordinates) {
         return horizontal == coordinates.getHorizontal() && vertical == coordinates.getVertical();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Coordinates) return equals((Coordinates) obj);
+        else return super.equals(obj);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by username on 9/12/15.
  */
 public class Grid {
-    private Tile[][] tileSet;
+    private TileSet tileSet;
     GridProperties properties;
     private Random random = new Random();
 
@@ -15,28 +15,24 @@ public class Grid {
         generateTileSet();
     }
 
-    public Tile[][] getTileSet() {
+    public TileSet getTileSet() {
         return tileSet;
     }
 
     public Tile getTile(Coordinates tileCoordinates) {
-        return tileSet[tileCoordinates.getHorizontal()][tileCoordinates.getVertical()];
+        return tileSet.getTile(tileCoordinates);
     }
 
     public void setTile(Coordinates tileCoordinates, Tile tile) {
-        tileSet[tileCoordinates.getHorizontal()][tileCoordinates.getVertical()] = tile;
+        tileSet.setTile(tileCoordinates, tile);
     }
 
     public boolean isTileExists(Coordinates tileCoordinates) {
-        try {
-            getTile(tileCoordinates);
-            return true;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
+        return tileSet.isTileExists(tileCoordinates);
     }
 
     protected void generateTileSet() {
+        tileSet = new TileSet(properties.width, properties.height);
         properties.dungeonGenerator.composeDungeon(properties.width, properties.height, 50);
 
         for (int row = 0; row < properties.dungeonGenerator.getHeight(); row++) {
@@ -44,11 +40,11 @@ public class Grid {
                 DungeonGenerator.TileType tileType = properties.dungeonGenerator.getTile(new Coordinates(column, row));
                 Tile tile;
                 switch (tileType) {
-                    case WALL: tile = TileFactory.makeWall();
+                    case WALL: tile = Tile.WALL;
                         break;
-                    case DOOR: tile = TileFactory.makeDoor();
+                    case DOOR: tile = Tile.DOOR;
                         break;
-                    case FLOOR: tile = TileFactory.makeDoor();
+                    case FLOOR: tile = Tile.FLOOR;
                         break;
                     default: throw new RuntimeException("Unrecognized tile type");
                 }
