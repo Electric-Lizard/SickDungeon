@@ -57,6 +57,7 @@ public class FieldOfViewTest {
 
         Random random = new Random();
         List<Coordinates> circle = FieldOfView.calculateCircle(
+                new TileSet(50, 50),
                 new Coordinates(23, 23),
                 10
         );
@@ -83,7 +84,7 @@ public class FieldOfViewTest {
 
         for (int column = 0; column < 50; column++) {
             for (int row = 0; row < 50; row++) {
-                Tile tile = column == 26 && row != 24 ? Tile.WALL : Tile.FLOOR;
+                Tile tile = column == 26 && row != 24 ? TileFactory.makeWall() : TileFactory.makeFloor();
                 tileSet.setTile(new Coordinates(column, row), tile);
             }
         }
@@ -96,12 +97,12 @@ public class FieldOfViewTest {
                 Coordinates tileCoordinates = new Coordinates(column, row);
                 Tile tile = tileSet.getTile(tileCoordinates);
                 char aChar;
-                if (tile == Tile.WALL) {
+                if (tile.getPassability() == Tile.Passability.NoPassable) {
                     aChar = fov.contains(tileCoordinates) ? '#' : ' ';
                 } else {
                     aChar = fov.contains(tileCoordinates) ? '.' : ' ';
                 }
-                if (tileCoordinates.equals(new Coordinates(23, 23))) aChar = 'g';
+                if (tileCoordinates.equals(new Coordinates(23, 23))) aChar = '@';
                 output.append(aChar);
             }
             output.append("\n");

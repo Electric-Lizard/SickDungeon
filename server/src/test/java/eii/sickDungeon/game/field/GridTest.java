@@ -29,7 +29,7 @@ public class GridTest {
         LinesDungeonGenerator dungeonGenerator = new LinesDungeonGenerator();
         dungeonGenerator.generateBaseBox(100, 30);
 
-        Assert.assertFalse(dungeonGenerator.checkWallPossibility(new Coordinates(1, 0), Direction.Down) != null);
+        Assert.assertFalse(dungeonGenerator.checkWallPossibility(new Coordinates(1, 0), Direction.BOTTOM) != null);
     }
 
     public String drawRandomDungeon(int width, int height) {

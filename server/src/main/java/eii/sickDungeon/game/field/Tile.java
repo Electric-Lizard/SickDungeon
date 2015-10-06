@@ -3,10 +3,7 @@ package eii.sickDungeon.game.field;
 /**
  * Created by username on 9/12/15.
  */
-public enum Tile {
-    WALL(Passability.NoPassable, Transparency.OPAQUE), FLOOR(Passability.Passable, Transparency.TRANSPARENT),
-    DOOR(Passability.NoPassable, Transparency.OPAQUE, true);
-
+public class Tile {
     private Passability passability;
     private Transparency transparency;
 

@@ -103,7 +103,7 @@ public class LinesDungeonGenerator implements DungeonGenerator {
 
     public List<Coordinates> getRandomWallLineCoordinates(Coordinates pointCoordinates) {
         List<Coordinates> wallLineCoordinates = null;
-        List<Direction> directions = Arrays.asList(Direction.Up, Direction.Right, Direction.Down, Direction.Left);
+        List<Direction> directions = Arrays.asList(Direction.TOP, Direction.RIGHT, Direction.BOTTOM, Direction.LEFT);
         directions = new ArrayList<>(directions);
 
         while (directions.size() > 0) {
@@ -129,8 +129,8 @@ public class LinesDungeonGenerator implements DungeonGenerator {
         if (getTile(tileLine.get(0)) != TileType.FLOOR)
             return null;
 
-        Direction[] paddingDirections = direction == Direction.Down || direction == Direction.Up ?
-                new Direction[] {Direction.Left, Direction.Right} : new Direction[] {Direction.Up, Direction.Down};
+        Direction[] paddingDirections = direction == Direction.BOTTOM || direction == Direction.TOP ?
+                new Direction[] {Direction.LEFT, Direction.RIGHT} : new Direction[] {Direction.TOP, Direction.BOTTOM};
         for (Coordinates linePointCoordinates : tileLine) {
             if (!checkPadding(linePointCoordinates, TileType.FLOOR, 1, paddingDirections))
                 return null;

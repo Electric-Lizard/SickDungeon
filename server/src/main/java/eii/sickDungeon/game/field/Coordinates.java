@@ -29,6 +29,10 @@ public class Coordinates implements Cloneable {
         );
     }
 
+    public Coordinates shift(Direction direction) {
+        return shift(direction.getCoordinates());
+    }
+
     public boolean equals(Coordinates coordinates) {
         return horizontal == coordinates.getHorizontal() && vertical == coordinates.getVertical();
     }

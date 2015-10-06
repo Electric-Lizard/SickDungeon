@@ -2,7 +2,6 @@ package eii.sickDungeon.game.field;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -50,7 +49,7 @@ public class FieldOfView {
 
     public static List<Coordinates> calculateVisibleTiles(TileSet tileSet, Coordinates observerPoint, int radius) {
         List<Coordinates> visibleCoordinates = new ArrayList<>();
-        List<Coordinates> viewRangeCoordinates = calculateCircle(observerPoint, radius);
+        List<Coordinates> viewRangeCoordinates = calculateCircle(tileSet, observerPoint, radius);
         for (Coordinates coordinate : viewRangeCoordinates) {
             if (isPointVisible(tileSet, observerPoint, coordinate)) {
                 visibleCoordinates.add(coordinate);
@@ -61,9 +60,10 @@ public class FieldOfView {
             if (!visibleCoordinates.contains(coordinate) &&
                     tileSet.getTile(coordinate).getTransparency() == Tile.Transparency.OPAQUE) {
                 boolean hasNearlyVisible = false;
-                for (Direction d : Arrays.asList(Direction.Up, Direction.Right, Direction.Down, Direction.Left)) {
+                for (Direction d : Direction.values()) {
                     Coordinates nearlyPoint =  coordinate.shift(d.getCoordinates());
-                    if (tileSet.getTile(nearlyPoint).getTransparency() == Tile.Transparency.TRANSPARENT &&
+                    if (!tileSet.isOutside(nearlyPoint) &&
+                            tileSet.getTile(nearlyPoint).getTransparency() == Tile.Transparency.TRANSPARENT &&
                             visibleCoordinates.contains(nearlyPoint)) {
                         hasNearlyVisible = true;
                         break;
@@ -87,10 +87,18 @@ public class FieldOfView {
         return true;
     }
 
-    public static List<Coordinates> calculateCircle(Coordinates center, int radius) {
+    public static List<Coordinates> calculateCircle(TileSet tileSet, Coordinates center, int radius) {
         List<Coordinates> circle = new ArrayList<>();
-        for (int x = center.getHorizontal() - radius; x <= center.getHorizontal() + radius; x++) {
-            for (int y = center.getVertical() - radius; y <= center.getVertical() + radius; y++) {
+        int left = center.getHorizontal() - radius;
+        int right = center.getHorizontal() + radius;
+        int lastX = tileSet.getWidth() - 1;
+        int top = center.getVertical() - radius;
+        int bottom = center.getVertical() + radius;
+        int lastY = tileSet.getHeight() - 1;
+
+
+        for (int x = left < 0 ? 0 : left, x1 = right > lastX ? lastX : right; x <= x1; x++) {
+            for (int y = top < 0 ? 0 : top, y1 = bottom > lastY ? lastY : bottom; y <= y1; y++) {
                 Coordinates point = new Coordinates(x, y);
                 if (isPointInCircle(center, radius, point)) {
                     circle.add(point);
@@ -104,41 +112,5 @@ public class FieldOfView {
         return Math.pow((pointCoordinates.getHorizontal() - circleCenter.getHorizontal()), 2) +
                 Math.pow((pointCoordinates.getVertical() - circleCenter.getVertical()), 2) <
                 Math.pow(circleRadius + 1, 2);
-    }
-
-    /**
-     * @deprecated
-     * @param center
-     * @param radius
-     * @return
-     */
-    public static List<Coordinates> calculateCircleBorder(Coordinates center, int radius) {
-        int x = radius;
-        int y = 0;
-        int d = 1 - x;
-
-        int cx = center.getHorizontal();
-        int cy = center.getVertical();
-
-        List<Coordinates> circle = new ArrayList<>();
-        while (y <= x) {
-            circle.add(new Coordinates(cx + x, cy + y));
-            circle.add(new Coordinates(cx + y, cy + x));
-            circle.add(new Coordinates(cx - x, cy + y));
-            circle.add(new Coordinates(cx - y, cy + x));
-            circle.add(new Coordinates(cx - x, cy - y));
-            circle.add(new Coordinates(cx - y, cy - x));
-            circle.add(new Coordinates(cx + x, cy - y));
-            circle.add(new Coordinates(cx + y, cy - x));
-            y++;
-
-            if (d <= 0) {
-                d += 2 * y + 1;
-            } else {
-                x--;
-                d += 2 * (y - x) + 1;
-            }
-        };
-        return circle;
     }
 }

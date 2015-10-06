@@ -1,13 +1,15 @@
 package eii.sickDungeon.game.field;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * Created by username on 9/12/15.
  */
 public class Grid {
-    private TileSet tileSet;
     GridProperties properties;
+    private TileSet tileSet;
     private Random random = new Random();
 
     public Grid(GridProperties properties) {
@@ -31,6 +33,24 @@ public class Grid {
         return tileSet.isTileExists(tileCoordinates);
     }
 
+    public List<Coordinates> findTiles(TileFilter tileFilter) {
+        List<Coordinates> foundTiles = new ArrayList<>();
+
+        for (int col = 0; col < properties.width; col++) {
+            for (int row = 0; row < properties.height; row++) {
+                Coordinates coordinates = new Coordinates(col, row);
+                Tile tile = getTile(coordinates);
+                if (tileFilter.filterTile(tile)) foundTiles.add(coordinates);
+            }
+        }
+
+        return foundTiles;
+    }
+
+    public List<Coordinates> calculateVisibleTiles(Coordinates point, int viewRadius) {
+        return FieldOfView.calculateVisibleTiles(tileSet, point, viewRadius);
+    }
+
     protected void generateTileSet() {
         tileSet = new TileSet(properties.width, properties.height);
         properties.dungeonGenerator.composeDungeon(properties.width, properties.height, 50);
@@ -40,23 +60,21 @@ public class Grid {
                 DungeonGenerator.TileType tileType = properties.dungeonGenerator.getTile(new Coordinates(column, row));
                 Tile tile;
                 switch (tileType) {
-                    case WALL: tile = Tile.WALL;
+                    case WALL:
+                        tile = TileFactory.makeWall();
                         break;
-                    case DOOR: tile = Tile.DOOR;
+                    case DOOR:
+                        tile = TileFactory.makeDoor();
                         break;
-                    case FLOOR: tile = Tile.FLOOR;
+                    case FLOOR:
+                        tile = TileFactory.makeFloor();
                         break;
-                    default: throw new RuntimeException("Unrecognized tile type");
+                    default:
+                        throw new RuntimeException("Unrecognized tile type");
                 }
 
                 setTile(new Coordinates(column, row), tile);
             }
         }
-    }
-
-    protected boolean isBorder(Coordinates coordinates) {
-        int vertical = coordinates.getVertical();
-        int horizontal = coordinates.getHorizontal();
-        return horizontal == 0 || horizontal == properties.width - 1 || vertical == 0 || vertical == properties.height - 1;
     }
 }

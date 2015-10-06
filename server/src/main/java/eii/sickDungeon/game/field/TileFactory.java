@@ -5,12 +5,12 @@ package eii.sickDungeon.game.field;
  */
 public class TileFactory {
     public static Tile makeWall() {
-        return Tile.WALL;
+        return new Tile(Tile.Passability.NoPassable, Tile.Transparency.OPAQUE);
     }
     public static Tile makeFloor() {
-        return Tile.FLOOR;
+        return new Tile(Tile.Passability.Passable, Tile.Transparency.TRANSPARENT);
     }
     public static Tile makeDoor() {
-        return Tile.DOOR;
+        return new Tile(Tile.Passability.NoPassable, Tile.Transparency.OPAQUE, true);
     }
 }
